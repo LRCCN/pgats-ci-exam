@@ -7,12 +7,12 @@ name: 'N2 - Scheduled Execution'
 # manual trigger = workflow_dispatch
 # scheduled trigger = schedule
 # cron format: https://crontab.guru/
-# example: "0 6 * * 1" = every Monday at 6am UTC
+# example: "*/5 * * * *" = every 5 minutes
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 6 * * 1' # every Monday at 6am UTC
+    - cron: '*/5 * * * *' # every 5 minutes
 
 # tasks inside the pipeline = jobs
 
