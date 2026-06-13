@@ -55,12 +55,12 @@ on:
 
 ### 3. Execução Agendada (`03-schedule.yaml`)
 
-Disparada automaticamente toda **segunda-feira às 6h UTC** via expressão cron. Garante execução periódica dos testes mesmo sem atividade no repositório, identificando regressões causadas por fatores externos (atualizações de dependências, por exemplo).
+Disparada automaticamente **a cada 5 minutos** via expressão cron. Garante execução periódica dos testes mesmo sem atividade no repositório, identificando regressões causadas por fatores externos (atualizações de dependências, por exemplo).
 
 ```yaml
 on:
   schedule:
-    - cron: '0 6 * * 1'
+    - cron: '*/5 * * * *'
 ```
 
 ---
