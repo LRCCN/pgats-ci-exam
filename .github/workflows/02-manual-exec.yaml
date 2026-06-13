@@ -1,0 +1,53 @@
+# Level 01 CI - Manual Trigger via Click
+
+# pipeline name
+name: 'N1 - Manual Execution'
+
+# triggers - workflow start rules
+# manual trigger = workflow_dispatch
+
+on:
+  workflow_dispatch:
+
+# tasks inside the pipeline = jobs
+
+jobs:
+  # job name
+  unit:
+    # machine where the job runs
+    runs-on: ubuntu-latest
+
+    # job steps
+    steps:
+      # clone the repository
+      - uses: actions/checkout@v4
+
+      # install Node.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+
+      # install Yarn
+      - name: Installing Yarn
+        run: npm install -g yarn
+
+      # install dependencies
+      - name: Installing dependencies
+        run: yarn
+
+      # run linter
+      - name: Running lint
+        run: yarn lint
+
+      # run unit tests and generate mochawesome report
+      - name: Running unit tests
+        run: yarn test
+
+      # upload test report as pipeline artifact
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: relatorio-testes-manual
+          path: reports/
+          retention-days: 30
