@@ -1,7 +1,7 @@
-# Level 02 CI - Scheduled Execution
+# Level 03 CI - Scheduled Execution
 
 # pipeline name
-name: 'N2 - Scheduled Execution'
+name: 'N3 - Scheduled Execution'
 
 # triggers - workflow start rules
 # manual trigger = workflow_dispatch
