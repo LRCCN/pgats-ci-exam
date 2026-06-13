@@ -37,6 +37,8 @@ pgats-ci-exam/
 
 Disparada automaticamente a cada `push` na branch `main`. Garante que nenhuma alteração quebre os testes antes de integrar ao código principal.
 
+![alt text](image-1.png)
+
 ```yaml
 on:
   push:
@@ -48,6 +50,8 @@ on:
 
 Disparada manualmente pelo desenvolvedor através da aba **Actions** no GitHub, usando o gatilho `workflow_dispatch`. Útil para revalidar o estado da aplicação sob demanda, sem necessidade de um novo commit.
 
+![alt text](image-2.png)
+
 ```yaml
 on:
   workflow_dispatch:
@@ -56,6 +60,8 @@ on:
 ### 3. Execução Agendada (`03-schedule.yaml`)
 
 Disparada automaticamente **a cada 5 minutos** via expressão cron. Garante execução periódica dos testes mesmo sem atividade no repositório, identificando regressões causadas por fatores externos (atualizações de dependências, por exemplo).
+
+![alt text](image-3.png)
 
 ```yaml
 on:
@@ -98,6 +104,7 @@ A etapa de upload usa `if: always()` para garantir que o relatório seja publica
 | **Cron** | Expressão de agendamento no formato Unix usada para definir recorrência de execução |
 | **Artifact** | Arquivo gerado durante a pipeline e armazenado no GitHub para consulta posterior |
 | **Mochawesome** | Reporter do Mocha que gera relatórios HTML detalhados sobre a execução dos testes |
+![alt text](image.png)
 
 ---
 
