@@ -18,9 +18,7 @@ A suite de testes é composta por **6 casos de teste** escritos com **Mocha**, c
 pgats-ci-exam/
 ├── .github/
 │   └── workflows/
-│       ├── 01-push-exec.yaml      # Pipeline por push
-│       ├── 02-manual-exec.yaml    # Pipeline manual
-│       └── 03-schedule.yaml       # Pipeline agendada
+│       └── ci-integrated.yaml     # Pipeline integrada (push, manual e agendada)
 ├── src/
 │   └── servicoDePagamento.js      # Código-fonte
 ├── test/
@@ -31,42 +29,37 @@ pgats-ci-exam/
 
 ---
 
-## Pipelines — GitHub Actions
+## Pipeline — GitHub Actions
 
-### 1. Execução por Push (`01-push-exec.yaml`)
+### `ci-integrated.yaml`
+
+Arquivo único que centraliza os três tipos de execução exigidos pela disciplina:
+
+**Execução por Push**
 
 Disparada automaticamente a cada `push` na branch `main`. Garante que nenhuma alteração quebre os testes antes de integrar ao código principal.
 
-![alt text](image-1.png)
-
 ```yaml
-on:
-  push:
-    branches:
-      - main
+push:
+  branches:
+    - main
 ```
 
-### 2. Execução Manual (`02-manual-exec.yaml`)
+**Execução Manual**
 
-Disparada manualmente pelo desenvolvedor através da aba **Actions** no GitHub, usando o gatilho `workflow_dispatch`. Útil para revalidar o estado da aplicação sob demanda, sem necessidade de um novo commit.
-
-![alt text](image-2.png)
+Disparada pelo desenvolvedor através da aba **Actions** no GitHub, usando o gatilho `workflow_dispatch`. Útil para revalidar o estado da aplicação sob demanda, sem necessidade de um novo commit.
 
 ```yaml
-on:
-  workflow_dispatch:
+workflow_dispatch:
 ```
 
-### 3. Execução Agendada (`03-schedule.yaml`)
+**Execução Agendada**
 
-Disparada automaticamente **a cada 5 minutos** via expressão cron. Garante execução periódica dos testes mesmo sem atividade no repositório, identificando regressões causadas por fatores externos (atualizações de dependências, por exemplo).
-
-![alt text](image-3.png)
+Disparada automaticamente **a cada 5 minutos** via expressão cron. Garante execução periódica dos testes mesmo sem atividade no repositório.
 
 ```yaml
-on:
-  schedule:
-    - cron: '*/5 * * * *'
+schedule:
+  - cron: '*/5 * * * *'
 ```
 
 ---
@@ -104,7 +97,6 @@ A etapa de upload usa `if: always()` para garantir que o relatório seja publica
 | **Cron** | Expressão de agendamento no formato Unix usada para definir recorrência de execução |
 | **Artifact** | Arquivo gerado durante a pipeline e armazenado no GitHub para consulta posterior |
 | **Mochawesome** | Reporter do Mocha que gera relatórios HTML detalhados sobre a execução dos testes |
-![alt text](image.png)
 
 ---
 
@@ -121,7 +113,7 @@ A etapa de upload usa `if: always()` para garantir que o relatório seja publica
 
 ## Como Executar Localmente
 
-**Pré-requisitos:** Node.js 20+ e Yarn instalados.
+**Pré-requisitos:** Node.js 24+ e Yarn instalados.
 
 ```bash
 # Instalar dependências

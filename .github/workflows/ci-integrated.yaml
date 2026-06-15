@@ -1,13 +1,22 @@
-# Level 01 CI - Manual Trigger via Click
+# CI Pipeline - Integrated Execution
 
 # pipeline name
-name: 'N2 - Manual Execution'
+name: 'CI - Integrated Execution'
 
 # triggers - workflow start rules
 # manual trigger = workflow_dispatch
+# trigger on push = push
+# scheduled trigger = schedule
+# cron format: https://crontab.guru/
+# example: "*/5 * * * *" = every 5 minutes
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '*/5 * * * *' # every 5 minutes
 
 # tasks inside the pipeline = jobs
 
@@ -26,6 +35,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24.x
+          cache: 'yarn'
 
       # install Yarn
       - name: Installing Yarn
@@ -48,6 +58,6 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: relatorio-testes-manual
+          name: relatorio-testes
           path: reports/
           retention-days: 30
